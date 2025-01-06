@@ -1,0 +1,12 @@
+CompileFlags:
+  Add:
+    - "-I/home/jame/Desktop/public/Qt/calculator"
+    - "-I/usr/include/qt6"
+    - "-I/usr/include/qt6/QtWidgets"
+    - "-I/usr/include/qt6/QtGui" 
+    - "-I/usr/include/qt6/QtCore" 
+    - "-I/home/jame/Desktop/public/Qt/calculator/build"
+    - "-I/usr/lib/qt6/mkspecs/linux-g++" 
+Diagnostics:
+  MissingIncludes: Strict
+  UnusedIncludes: Strict
