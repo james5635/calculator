@@ -7,4 +7,3 @@ Language: Cpp
 DerivePointerAlignment: false
 PointerAlignment: Left
 ---
-
