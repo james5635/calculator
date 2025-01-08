@@ -8,14 +8,18 @@
 # You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 set -e
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+PROJECT_DIR="$SCRIPT_DIR/../"
 build() {
+    cd "$PROJECT_DIR"
     mkdir -p build
     cd build/
-    qmake6 ../calculator.pro
     # qmake ../calculator.pro
+    qmake ../calculator.pro
     make
 }
 clean() {
+    cd "$PROJECT_DIR"
     rm -rf ./build
 }
 run() {

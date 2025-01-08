@@ -18,6 +18,9 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
+ QMAKE_LFLAGS += '-Wl,-rpath,\'\$$ORIGIN/../lib\''
+#QMAKE_LFLAGS += '-Wl,-rpath,\'/lib\''
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
