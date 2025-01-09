@@ -207,7 +207,7 @@ jobs:
              cd deploy\windows\nsis
              echo "before making nsis" 
              dir
-             makensis /X"SetCompressor /FINAL lzma" setup.nsi
+             makensis /X"SetCompressor /FINAL lzma" ..\..\..\script\setup.nsi
              echo "after making nsis"
              dir
              ren *.exe ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
