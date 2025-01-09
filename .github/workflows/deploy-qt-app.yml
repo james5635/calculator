@@ -14,7 +14,7 @@ on:
 env:
   VERSION: "0.0.2"
   EXECUTABLE: "calculator"
-  APPLICATION: "Qt App"
+  APPLICATION: "calculator-app"
   QMAKE_PROJECT: "calculator.pro"
   QML_DIR_NIX: "assets/qml"
   QML_DIR_WIN: "assets\\qml"
