@@ -220,5 +220,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
-          # path: deploy/windows/nsis/${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
-          path: deploy/windows/nsis/
+          path: deploy/windows/nsis/${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
+          # path: deploy/windows/nsis/
