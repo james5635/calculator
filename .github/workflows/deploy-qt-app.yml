@@ -205,9 +205,10 @@ jobs:
              New-Item -Path deploy\windows\nsis\ -ItemType Directory
              move "${{env.APPLICATION}}" deploy\windows\nsis\
              cd deploy\windows\nsis
+             move ..\..\..\script\setup.nsi .\
              echo "before making nsis" 
              dir
-             makensis /X"SetCompressor /FINAL lzma" ..\..\..\script\setup.nsi
+             makensis /X"SetCompressor /FINAL lzma" setup.nsi
              echo "after making nsis"
              dir
              ren *.exe ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
