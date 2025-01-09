@@ -202,9 +202,14 @@ jobs:
       #
       - name: Make NSIS installer
         run: |
+             New-Item -Path deploy\windows\nsis\ -Item-Type Directory
              move "${{env.APPLICATION}}" deploy\windows\nsis\
              cd deploy\windows\nsis
+             echp "before making nsis" 
+             dir
              makensis /X"SetCompressor /FINAL lzma" setup.nsi
+             echo "after making nsis"
+             dir
              ren *.exe ${{env.EXECUTABLE}}-${{env.VERSION}}-Windows.exe
              
       #
