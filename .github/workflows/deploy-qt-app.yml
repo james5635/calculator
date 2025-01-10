@@ -74,7 +74,7 @@ jobs:
       # Rename to match "%AppName%-%Version%-Linux.tar.xz" format
       #
       - name: Rename 
-        run: mv ./build/bundle/*.tar.xz ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
+        run: sudo mv ./build/bundle/*.tar.xz ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
         
       #
       # Upload bundle to build artifacts
