@@ -41,9 +41,9 @@ if [ "$OS" != "Arch Linux" -a "$OS" != "Ubuntu" ]; then
   echo "This script is only for Arch Linux and Ubuntu"
   exit 0
 fi
-
-[ "$OS" = "Ubuntu" ] && apt update &&
-  apt install -y qtcreator qtbase5-dev qt5-qmake cmake \
+[ "$OS" = "Ubuntu" ] && sudo >/dev/null 2>&1 || apt install -y sudo
+[ "$OS" = "Ubuntu" ] && sudo apt update &&
+  sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake \
     libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev \
     patchelf tar xz-utils build-essential
 
