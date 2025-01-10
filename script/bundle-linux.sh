@@ -90,7 +90,7 @@ cp $LIB ./bundle/linux/lib
 [ "$OS" = "Ubuntu" ] && cp -r /usr/lib/x86_64-linux-gnu/qt5/plugins/ ./bundle/linux/lib/qt
 cp ./calculator ./bundle/linux/libexec
 [ "$OS" = "Arch Linux" ] && patchelf --set-rpath '$ORIGIN/../lib' $(echo $LIB | sed -e "s/\/usr\/lib\(64\)\?/.\/bundle\/linux\/lib/g") ./bundle/linux/libexec/calculator
-[ "$OS" = "Ubuntu" ] && sudo patchelf --set-rpath '$ORIGIN/../lib' $(echo $LIB | cut -d'/' -f4 | sed -e "s/\(.\+\)/.\/bundle\/linux\/lib\/\1/g") ./bundle/linux/libexec/calculator
+[ "$OS" = "Ubuntu" ] && sudo patchelf --set-rpath '$ORIGIN/../lib' $(echo "$LIB" | cut -d'/' -f4 | sed -e "s/\(.\+\)/.\/bundle\/linux\/lib\/\1/g") ./bundle/linux/libexec/calculator
 echo "Archiving calculator..."
 tar -cJf ./bundle/calculator-linux.tar.xz -C ./bundle/ linux
 echo "Calculator Linux bundle created at $PROJECT_DIR/build/bundle/calculator-linux.tar.xz"
