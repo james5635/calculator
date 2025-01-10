@@ -68,7 +68,7 @@ jobs:
       #
       - name: Create bundle
         run: | 
-             ./script/bundle-linux.sh
+             sudo ./script/bundle-linux.sh
      
       #
       # Rename to match "%AppName%-%Version%-Linux.tar.xz" format
