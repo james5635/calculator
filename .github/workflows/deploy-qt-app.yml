@@ -83,7 +83,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
-          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
+          path: ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
              
   # #
   # # macOS build
