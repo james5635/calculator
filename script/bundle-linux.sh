@@ -41,7 +41,7 @@ if [ "$OS" != "Arch Linux" -a "$OS" != "Ubuntu" ]; then
   echo "This script is only for Arch Linux and Ubuntu"
   exit 0
 fi
-[ "$OS" = "Ubuntu" ] && sudo >/dev/null 2>&1 || apt install -y sudo
+[ "$OS" = "Ubuntu" ] && sudo >/dev/null 2>&1 || apt update && apt install -y sudo
 [ "$OS" = "Ubuntu" ] && sudo apt update &&
   sudo apt install -y qtcreator qtbase5-dev qt5-qmake cmake \
     libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev \
@@ -84,12 +84,13 @@ echo "making executable script..."
 echo "$VAR" >./bundle/linux/bin/calculator
 
 LIB=$(ldd ./calculator | cut -d' ' -f3 | grep -v '\<\(libstdc++.so\|libc.so\|libgcc_s.so\|libm.so\|libpthread.so\|libdl.so\|libasound.so\)')
+echo $LIB
 cp $LIB ./bundle/linux/lib
 [ "$OS" = "Arch Linux" ] && cp -r /usr/lib/qt/plugins/ ./bundle/linux/lib/qt
 [ "$OS" = "Ubuntu" ] && cp -r /usr/lib/x86_64-linux-gnu/qt5/plugins/ ./bundle/linux/lib/qt
 cp ./calculator ./bundle/linux/libexec
 [ "$OS" = "Arch Linux" ] && patchelf --set-rpath '$ORIGIN/../lib' $(echo $LIB | sed -e "s/\/usr\/lib\(64\)\?/.\/bundle\/linux\/lib/g") ./bundle/linux/libexec/calculator
-[ "$OS" = "Ubuntu" ] && patchelf --set-rpath '$ORIGIN/../lib' $(echo $LIB | cut -d'/' -f4 | sed -e "s/\(.\+\)/.\/bundle\/linux\/lib\/\1/g") ./bundle/linux/libexec/calculator
+[ "$OS" = "Ubuntu" ] && sudo patchelf --set-rpath '$ORIGIN/../lib' $(echo $LIB | cut -d'/' -f4 | sed -e "s/\(.\+\)/.\/bundle\/linux\/lib\/\1/g") ./bundle/linux/libexec/calculator
 echo "Archiving calculator..."
 tar -cJf ./bundle/calculator-linux.tar.xz -C ./bundle/ linux
 echo "Calculator Linux bundle created at $PROJECT_DIR/build/bundle/calculator-linux.tar.xz"
