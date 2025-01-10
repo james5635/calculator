@@ -28,7 +28,7 @@ jobs:
   # GNU/Linux build (we run on Ubuntu 16.04 to generate AppImage)
   #
   build-linux:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
       #
       # Checkout the repository
