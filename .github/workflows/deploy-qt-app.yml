@@ -58,6 +58,7 @@ jobs:
       #
       - name: Compile
         run: |
+             which qmake
              ./script/x.sh build
              
       #
