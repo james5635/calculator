@@ -58,33 +58,29 @@ jobs:
       #
       - name: Compile
         run: |
-             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release PREFIX=/usr
-             make -j8
+             ./script/x.sh build
              
       #
-      # Create the AppImage
+      # Create the bundle
       #
-      - name: Create AppImage
+      - name: Create bundle
         run: | 
-             make INSTALL_ROOT=appdir install
-             wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" -O linuxdeployqt
-             chmod a+x linuxdeployqt
-             ./linuxdeployqt appdir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so -qmldir="${{env.QML_DIR_NIX}}"
+             ./script/bundle.sh
      
       #
-      # Rename AppImage to match "%AppName%-%Version%-Linux.AppImage" format
+      # Rename to match "%AppName%-%Version%-Linux.tar.xz" format
       #
-      - name: Rename AppImage
-        run: mv *.AppImage ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
+      - name: Rename 
+        run: mv ./build/bundle/*.tar.xz ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
         
       #
-      # Upload AppImage to build artifacts
+      # Upload bundle to build artifacts
       #
-      - name: Upload AppImage
+      - name: Upload bundle
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
-          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
+          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
              
   # #
   # # macOS build
@@ -166,7 +162,7 @@ jobs:
       # Install Qt
       #
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v4
           
       #
       # Install NSIS
