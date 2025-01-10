@@ -58,10 +58,10 @@ jobs:
       #
       # Compile the application
       #
-      - name: Compile
-        run: |
-             which qmake
-             ./script/x.sh build
+      # - name: Compile
+      #   run: |
+      #        which qmake
+      #        ./script/x.sh build
              
       #
       # Create the bundle
