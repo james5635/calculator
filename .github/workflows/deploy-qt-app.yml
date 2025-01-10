@@ -5,7 +5,9 @@
 name: Build
 on:
   push:               # Run on push
+    branches: [ "qt5" ]
   pull_request:       # Run on pull-request
+    branches: [ "qt5" ]
 
 #--------------------------------------------------------------------------------
 # Define application name & version
