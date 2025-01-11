@@ -83,7 +83,8 @@ EOF
 echo "making executable script..."
 echo "$VAR" >./bundle/linux/bin/calculator
 
-LIB=$(ldd ./calculator | cut -d' ' -f3 | grep -v '\<\(libstdc++.so\|libc.so\|libgcc_s.so\|libm.so\|libpthread.so\|libdl.so\|libasound.so\)')
+#LIB=$(ldd ./calculator | cut -d' ' -f3 | grep -v '\<\(libstdc++.so\|libc.so\|libgcc_s.so\|libm.so\|libpthread.so\|libdl.so\|libasound.so\)')
+LIB=$(ldd ./calculator | cut -d' ' -f3)
 echo $LIB
 cp $LIB ./bundle/linux/lib
 [ "$OS" = "Arch Linux" ] && cp -r /usr/lib/qt/plugins/ ./bundle/linux/lib/qt
