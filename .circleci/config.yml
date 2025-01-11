@@ -20,6 +20,8 @@ jobs:
           apt install -y python3-pip
           pip install aqtinstall
           aqt install-qt linux desktop 5.15.2 gcc_64
+          export PATH=$PATH:`pwd`/5.15.2/gcc_64/bin
+          which qmake
           mkdir -p build
           cd build
           qmake ../calculator.pro
