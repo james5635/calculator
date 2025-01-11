@@ -106,7 +106,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
-          path: ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
+          path: ./build/x/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
              
   # #
   # # macOS build
