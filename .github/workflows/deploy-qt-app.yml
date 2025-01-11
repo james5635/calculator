@@ -126,7 +126,7 @@ jobs:
       # Install Qt
       #
       - name: Install Qt
-        uses: jurplel/install-qt-action@4
+        uses: jurplel/install-qt-action@v4
         with: 
           version: '5.15.2'
       
@@ -135,15 +135,20 @@ jobs:
       #
       - name: Compile
         run: |
-             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             mkdir -p build
+             cd build
+             qmake ../calculator.pro
              make -j8
+             ls -l
              
       #
       # Deploy application
       #
       - name: Deploy app
         run: |
+             cd build
              macdeployqt ${{env.EXECUTABLE}}.app -qmldir="${{env.QML_DIR_NIX}}"
+             ls -la
              mv "${{env.EXECUTABLE}}.app" "${{env.APPLICATION}}.app"  
       
       #
@@ -152,6 +157,7 @@ jobs:
       #
       - name: Create ZIP file
         run: |
+             cd build
              ditto -c -k --sequesterRsrc --keepParent "${{env.APPLICATION}}.app" ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
      
       #
@@ -161,7 +167,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
-          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+          path: build/${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
           
   #
   # Windows build
