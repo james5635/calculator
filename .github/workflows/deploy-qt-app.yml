@@ -90,7 +90,7 @@ jobs:
              Categories=Utility;
              EOF
              touch default.png
-             ../linuxdeployqt-continuous-x86_64.AppImage ./defualt.desktop -appimage
+             ../linuxdeployqt-continuous-x86_64.AppImage ./default.desktop -appimage
              
      
       #
