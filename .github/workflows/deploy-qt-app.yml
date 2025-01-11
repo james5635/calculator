@@ -111,55 +111,57 @@ jobs:
   # #
   # # macOS build
   # #
-  # build-mac:
-  #   runs-on: macos-latest
-  #   steps:
-  #     #
-  #     # Checkout the repository
-  #     #
-  #     - name: Checkout repository and submodules
-  #       uses: actions/checkout@v2
-  #       with:
-  #         submodules: recursive
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      #
+      # Checkout the repository
+      #
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
-  #     #
-  #     # Install Qt
-  #     #
-  #     - name: Install Qt
-  #       uses: jurplel/install-qt-action@v2
+      #
+      # Install Qt
+      #
+      - name: Install Qt
+        uses: jurplel/install-qt-action@4
+        with: 
+          version: '5.15.2'
       
-  #     #
-  #     # Compile application
-  #     #
-  #     - name: Compile
-  #       run: |
-  #            qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
-  #            make -j8
+      #
+      # Compile application
+      #
+      - name: Compile
+        run: |
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             make -j8
              
-  #     #
-  #     # Deploy application
-  #     #
-  #     - name: Deploy app
-  #       run: |
-  #            macdeployqt ${{env.EXECUTABLE}}.app -qmldir="${{env.QML_DIR_NIX}}"
-  #            mv "${{env.EXECUTABLE}}.app" "${{env.APPLICATION}}.app"  
+      #
+      # Deploy application
+      #
+      - name: Deploy app
+        run: |
+             macdeployqt ${{env.EXECUTABLE}}.app -qmldir="${{env.QML_DIR_NIX}}"
+             mv "${{env.EXECUTABLE}}.app" "${{env.APPLICATION}}.app"  
       
-  #     #
-  #     # ZIP application "%AppName%-%Version%-macOS.zip"
-  #     # We use ditto instead of zip to use the same commands as Finder
-  #     #
-  #     - name: Create ZIP file
-  #       run: |
-  #            ditto -c -k --sequesterRsrc --keepParent "${{env.APPLICATION}}.app" ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+      #
+      # ZIP application "%AppName%-%Version%-macOS.zip"
+      # We use ditto instead of zip to use the same commands as Finder
+      #
+      - name: Create ZIP file
+        run: |
+             ditto -c -k --sequesterRsrc --keepParent "${{env.APPLICATION}}.app" ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
      
-  #     #
-  #     # Upload ZIP to build artifacts
-  #     #
-  #     - name: Upload ZIP
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
-  #         path: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+      #
+      # Upload ZIP to build artifacts
+      #
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
           
   #
   # Windows build
