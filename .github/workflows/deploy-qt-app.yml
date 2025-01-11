@@ -147,7 +147,7 @@ jobs:
       - name: Deploy app
         run: |
              cd build
-             macdeployqt ${{env.EXECUTABLE}}.app -qmldir="${{env.QML_DIR_NIX}}"
+             macdeployqt ${{env.EXECUTABLE}}.app 
              ls -la
              mv "${{env.EXECUTABLE}}.app" "${{env.APPLICATION}}.app"  
       
