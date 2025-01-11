@@ -3,12 +3,24 @@ version: 2.1
 jobs:
   hello-job:
     docker:
-      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+      # - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+      - image: ubuntu:20.04 # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
       - run: | 
-          echo "hello world"
-          echo "hello CircleCI"
+          echo "starting"
+          apt update
+          apt insall sudo
+          sudo apt-get install -y libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev 
+          sudo apt install build-essential xz-utils tar wget libglib2.0-0 libfuse-dev libdbus-1-dev libxcb-shape0 libfontconfig
+          sudo apt install python3-pip
+          pip install aqtinstall
+          aqt install-qt linux desktop 5.15.2 gcc_64
+          mkdir -p build
+          cd build
+          qmake ../calculator.pro
+          make
+        
 
 
 
