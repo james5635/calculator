@@ -26,6 +26,8 @@ jobs:
           cd build
           qmake ../calculator.pro
           make
+      - store_artifacts:
+          path: /root/project
         
 
 
