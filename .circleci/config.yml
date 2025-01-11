@@ -9,14 +9,13 @@ jobs:
       - checkout # check out the code in the project directory
       - run: | 
           set -v
-          export DEBIAN_FRONTEND=noninteractive
           echo "starting"
           apt update
           pwd
           ls -l
-          apt install -y sudo dialog
+          apt install -y sudo 
           sudo apt-get install -y libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev 
-          sudo apt install -y build-essential xz-utils tar wget libglib2.0-0 libfuse-dev libdbus-1-dev libxcb-shape0 libfontconfig
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y build-essential xz-utils tar wget libglib2.0-0 libfuse-dev libdbus-1-dev libxcb-shape0 libfontconfig
           sudo apt install -y python3-pip
           pip install aqtinstall
           aqt install-qt linux desktop 5.15.2 gcc_64
