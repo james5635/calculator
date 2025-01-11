@@ -27,7 +27,7 @@ jobs:
           qmake ../calculator.pro
           make
       - store_artifacts:
-          path: /root/project
+          path: /root/project/build
         
 
 
