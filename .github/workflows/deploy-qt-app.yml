@@ -30,7 +30,7 @@ jobs:
   # GNU/Linux build (we run on Ubuntu 16.04 to generate AppImage)
   #
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       #
       # Checkout the repository
@@ -43,8 +43,10 @@ jobs:
       #
       # Install Qt
       #
-      # - name: Install Qt
-      #   uses: jurplel/install-qt-action@v4
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with: 
+          version: '5.15.2'
           
       #
       # Install additional dependencies, stolen from:
@@ -53,28 +55,49 @@ jobs:
       - name: Install dependencies
         run: |
              sudo apt-get update
-             sudo apt-get install -y libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev
+             sudo apt-get install -y libgl1-mesa-dev libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev 
+             sudo apt install build-essential xz-utils tar wget libglib2.0-0 libfuse-dev libdbus-1-dev libxcb-shape0 libfontconfig
         
       #
       # Compile the application
       #
-      # - name: Compile
-      #   run: |
-      #        which qmake
-      #        ./script/x.sh build
+      - name: Compile
+        run: |
+             mkdir -p build
+             cd build
+             qmake ../calculator.pro
+             make
              
       #
       # Create the bundle
       #
       - name: Create bundle
         run: | 
-             sudo ./script/bundle-linux.sh
+             cd build
+             wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+             chmod +x linuxdeployqt-continuous-x86_64.AppImage
+             mkdir x
+             cd x
+             mv ../calculator .
+             cat << EOF > default.desktop
+             [Desktop Entry]
+             Type=Application
+             Name=calculator
+             Exec=calculator %F
+             Icon=default
+             Comment=Edit this default file
+             Terminal=true
+             Categories=Utility;
+             EOF
+             touch default.png
+             ../linuxdeployqt-continuous-x86_64.AppImage ./defualt.desktop -appimage
+             
      
       #
-      # Rename to match "%AppName%-%Version%-Linux.tar.xz" format
+      # Rename to match "%AppName%-%Version%-Linux.AppImage" format
       #
       - name: Rename 
-        run: sudo mv ./build/bundle/*.tar.xz ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
+        run: sudo mv ./build/x/*.AppImage ./build/x/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
         
       #
       # Upload bundle to build artifacts
@@ -82,8 +105,8 @@ jobs:
       - name: Upload bundle
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
-          path: ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.tar.xz
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
+          path: ./build/bundle/${{env.EXECUTABLE}}-${{env.VERSION}}-Linux.AppImage
              
   # #
   # # macOS build
